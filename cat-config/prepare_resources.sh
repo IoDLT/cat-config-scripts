@@ -125,7 +125,7 @@ function prepare_dual_resources() {
 	run_sed database database_pairs
 
 	local p2p_extensions=("eventsource" "harvesting" "syncsource")
-	set_extensions node "true" p2p_extensions
+	set_extensions extensions-server "true" p2p_extensions
 }
 
 echo "[PREPARING $1 NODE CONFIGURATION]"

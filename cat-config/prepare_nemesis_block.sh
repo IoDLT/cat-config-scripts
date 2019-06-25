@@ -37,9 +37,9 @@ function update_nemesis_block_file() {
     local -A nemesis_pairs=(
         "cppFile" ""
         "nemesisSignerPrivateKey" "$nemesis_signer_key"
-    "binDirectory" "/tmp/seed/mijin-test/")
-    run_sed "nemesis-block" nemesis_pairs
-    
+        "binDirectory" "/tmp/seed/mijin-test/")
+
+    run_sed "nemesis-block" nemesis_pairs 
     update_harvesters
     
 }
@@ -53,7 +53,6 @@ function update_harvesters() {
     fi
     
     local new_harvester_addresses=( $(grep S $harvester_keys_path | sed -e 's/address (mijin-test)://g') )
-    
     local old_harvester_addresses=( $(grep -i -A12 "\bdistribution>cat:harvest\b" "${local_path}${nemesis_path}" | grep -o -e "^S.\{40\}") )
     
     for i in {1..11}
