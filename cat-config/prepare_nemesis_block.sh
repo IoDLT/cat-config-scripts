@@ -37,7 +37,7 @@ function update_nemesis_block_file() {
     local -A nemesis_pairs=(
         "cppFile" ""
         "nemesisSignerPrivateKey" "$nemesis_signer_key"
-        "binDirectory" "/tmp/seed/mijin-test/")
+        "binDirectory" "${local_path}/seed")
 
     run_sed "nemesis-block" nemesis_pairs 
     update_harvesters

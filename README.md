@@ -38,6 +38,7 @@ catapult-node-data/
 ├── nemesis
 ├── resources
 ├── scripts
+├── seed
 └──    
 ```
 
@@ -51,6 +52,7 @@ As you can probably guess, our node configuration scripts will end up being insi
  mkdir nemesis
  mkdir resources
  mkdir scripts
+ mkdir seed
  ```
 
 
