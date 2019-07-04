@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-local script_src=$PWD/scripts/cat-config
+local script_src=$PWD/scripts/cat-config-linux
 local catapult_server_src=$2
 local boot_key=$3
 local public_key=$4

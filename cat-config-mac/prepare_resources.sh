@@ -41,7 +41,7 @@ function set_extensions() {
 function prepare_base_resources() {
 	copy_peers "p2p"
 
-	for extension in "extensions-server" "inflation" "logging" "logging-server" "network" "networkheight" "node" "task" "timesync" "user"; do
+	for extension in "extensions-server" "inflation" "logging-recovery" "extensions-recovery" "logging-server" "network" "networkheight" "node" "task" "timesync" "user"; do
 		copy_properties ${extension}
 	done
 
