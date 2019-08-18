@@ -22,6 +22,7 @@ These scripts were originally created by core developer Jaguar0625.  I took them
 - Generate a nemesis block properties file with boot key and paths.
 - Generate mosaic ids for the given public key.
 - Generate a list of harvester keys and addresses, and configure the nemesis block file with them.
+- Generate a unique generation hash for each instance of the network.
 - Generate the nemesis block, 64 byte hashes.dat, and a fresh `data` directory.  
 
 This is the setup that is required to get a Catapult node up and running.  Luckily, these scripts do it in just a few steps. :)
