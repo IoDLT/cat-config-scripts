@@ -48,7 +48,7 @@ rm -rf $PWD/resources
 mkdir $PWD/resources
 
 function setup_existing() {
-    local generation_hash=$(grep "private key:" ${script_src}/templates/$2/generation_hash.txt | sed -e 's/private key://g')
+    local generation_hash=$(grep "private key:" ${script_src}/templates/$2/generation_hash.txt | sed -e 's/private key://g' | tr -d ' ')
     source ${script_src}/prepare_resources.sh $1 $3 ${script_src}/templates/$2 $PWD/resources $4 $5 ${generation_hash}
     cp -R ${script_src}/templates/$2/seed/* $PWD/data
 }
@@ -57,7 +57,7 @@ function setup_local() {
     
     echo "Generating network generation hash (UUID)"
     source ${script_src}/generate_hash.sh
-    local generation_hash=$(grep "private key:" $PWD/generation_hash.txt | sed -e 's/private key://g')
+    local generation_hash=$(grep "private key:" $PWD/generation_hash.txt | sed -e 's/private key://g' | tr -d ' ')
     
     echo "Preparing resources"
     source ${script_src}/prepare_resources.sh $1 $2 ${script_src}/templates/local $PWD/resources $3 $4 ${generation_hash}
