@@ -2,21 +2,23 @@
 # require zsh for associative arrays
 
 local catapult_server_src=$2
-local resources_dest=$3
-local boot_key=$4
-local public_key=$5
+local resources_src=$3
+local resources_dest=$4
+local boot_key=$5
+local public_key=$6
+local generation_hash=$7
 local local_path=$PWD
 
 function copy_peers() {
 	local filename="peers-$1.json"
 	echo "copying ${filename}"
-	cp "${catapult_server_src}/resources/${filename}" "${resources_dest}/${filename}"
+	cp "${resources_src}/resources/${filename}" "${resources_dest}/${filename}"
 }
 
 function copy_properties() {
 	local filename="config-$1.properties"
 	echo "copying ${filename}"
-	cp "${catapult_server_src}/resources/${filename}" "${resources_dest}/${filename}"
+	cp "${resources_src}/resources/${filename}" "${resources_dest}/${filename}"
 }
 
 function run_sed() {
@@ -59,6 +61,7 @@ function prepare_base_resources() {
 
 
     local -A network_pairs=(
+		"generationHash" "$generation_hash"
         "publicKey" "$public_key"
         "totalChainImportance" "17'000'000"
         "initialCurrencyAtomicUnits" "8'999'999'998'000'000"

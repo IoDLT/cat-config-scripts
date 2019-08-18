@@ -1,0 +1,11 @@
+Address Tool
+Copyright (c) Jaguar0625, gimre, BloodyRookie, Tech Bureau, Corp.
+catapult version: 0.6.0.1 ccfd268 [master]
+
+Address Tool Initializing Logging...
+
+--- generating 1 keys ---
+           private key: E6404BA062DD9F4D81654941375483D034C9DF999CDE5900E51535379B8BB1C1
+            public key: FF59C7C8465E373BD8C49E476A83295FAEAA4CD3ECE1565E86975CF2707FBFBD
+  address (mijin-test): SAVGVPQJF4VE6QWRRPHURXGKDSK567DJLGSSKVZA
+

@@ -5,6 +5,7 @@
 local catapult_server_src=$1
 local local_path=$PWD
 local nemesis_signer_key=$2
+local generation_hash=$3
 local nemesis_path="/nemesis/nemesis-block.properties"
 local harvester_keys_path="harvester_addresses.txt"
 local currency_keys_path="currency_addresses.txt"
@@ -41,6 +42,7 @@ function update_nemesis_block_file() {
     
     local -A nemesis_pairs=(
         "cppFile" ""
+        "nemesisGenerationHash" "$generation_hash"
         "nemesisSignerPrivateKey" "$nemesis_signer_key"
         "binDirectory" "${local_path}/seed")
 
@@ -106,6 +108,8 @@ function nemgen() {
         ${catapult_server_src}/build/bin/catapult.tools.nemgen  --resources $local_path --nemesisProperties "${local_path}${nemesis_path}"
         
         cp -r ${local_path}/seed/* ${local_path}/data/
+
+        cd ..
     else
         echo "no need to run nemgen"
     fi
