@@ -2,14 +2,14 @@
   "_info": "this file contains a list of all trusted peers and can be shared",
   "knownPeers": [
     {
-      "publicKey": "{KEY}",
+      "publicKey": "0000000000000000000000000000000000000000000000000000000000000000",
       "endpoint": {
         "host": "127.0.0.1",
         "port": 7900
       },
       "metadata": {
-        "name": "{NAME}",
-        "roles": "Peer,Api"
+        "name": "peernode",
+        "roles": "Peer"
       }
     }
   ]
