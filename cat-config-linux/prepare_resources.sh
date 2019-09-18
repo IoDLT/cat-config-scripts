@@ -113,7 +113,7 @@ function prepare_peer_resources() {
 	run_sed node node_pairs
 
 	local -A harvesting_pairs=(
-		"harvestPrivateKey" "{INSERT_HARVESTER_KEY}"
+		"harvesterPrivateKey" "{INSERT_HARVESTER_KEY}"
 		"enableAutoHarvesting" "true")
 	run_sed harvesting harvesting_pairs
 }
