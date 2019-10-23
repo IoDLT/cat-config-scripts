@@ -83,6 +83,11 @@ function prepare_api_resources() {
 		copy_properties ${extension}
 	done
 
+	local -A database_uri=(
+		"databaseUri" "${REMOTE_MONGODB_HOST:-127.0.0.1:27017}"
+	)
+	run_sed "database" database_uri
+
 	local -A logging_pairs=(
 		"level" "Debug"
 		"sinkType" "Async")

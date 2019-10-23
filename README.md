@@ -59,6 +59,12 @@ As you can probably guess, our node configuration scripts will end up being insi
 
  Now, go ahead and move the `cat-config-<mac | linux>` found in this repo over to `catapult-node-data/scripts`
 
+ If you have a remote mongoDB host then you would also want to set the `REMOTE_MONGODB_HOST` environment variable.
+
+```
+export REMOTE_MONGODB_HOST=1.1.1.1:27018
+
+```
 
 ### Running `reset.sh`
 
