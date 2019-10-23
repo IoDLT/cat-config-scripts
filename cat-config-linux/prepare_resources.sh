@@ -84,7 +84,7 @@ function prepare_api_resources() {
 	done
 
 	local -A database_uri=(
-		"databaseUri" "${REMOTE_MONGODB_HOST:-127.0.0.1:27017}"
+		"databaseUri" "mongodb://${REMOTE_MONGODB_HOST:-127.0.0.1:27017}"
 	)
 	run_sed "database" database_uri
 
