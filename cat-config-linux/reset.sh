@@ -69,17 +69,17 @@ function setup_local() {
     local node_type=$1
     local catapult_server_src=$2
     local boot_key=$3
-    local public_key=$4
+    local network_public_key=$4
     
     echo "Generating network generation hash (UUID)"
     source ${script_src}/generate_hash.sh
-    local generation_hash=$(grep "private key:" ${local_path}/generation_hash.txt | sed -e 's/private key://g' | tr -d ' ')
-    
+    local generation_hash=$(grep "private key:" ${script_src}/generation_hash.txt | sed -e 's/private key://g' | tr -d ' ')
+
     echo "Preparing resources"
-    source ${script_src}/prepare_resources.sh ${node_network} ${node_type} ${script_src}/templates/local ${local_path}/resources ${catapult_server_src} ${boot_key} ${public_key} ${generation_hash}
-    
+    source ${script_src}/prepare_resources.sh ${node_type} ${catapult_server_src} ${script_src}/templates/local ${local_path}/resources ${boot_key} ${network_public_key} ${generation_hash}
+
     echo "Generating new nemesis block"
-    source ${script_src}/prepare_nemesis_block.sh ${node_type} ${catapult_server_src} ${generation_hash}
+    source ${script_src}/prepare_nemesis_block.sh ${catapult_server_src} ${boot_key} ${generation_hash}
 }
 
 function setup_foundation() {
@@ -92,7 +92,7 @@ while [[ 0 -ne $# ]]; do
         ## Prepares a standalone, single local node with its own completely new network
         --local)
             shift
-            local boot_key=${network_public_key}
+            local boot_key=${network_private_key}
             local public_key=${network_public_key}
             
             setup_local ${node_type} ${catapult_server_src} ${boot_key} ${public_key}
