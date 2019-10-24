@@ -134,11 +134,11 @@ function prepare_dual_resources() {
 	set_extensions extensions-server "true" p2p_extensions
 }
 
-echo "[PREPARING $1 NODE CONFIGURATION]"
+echo "[PREPARING ${node_type} NODE CONFIGURATION]"
 
 prepare_base_resources
 
-case "$1" in
+case "${node_type}" in
 	"api")
 		prepare_api_resources
 		;;

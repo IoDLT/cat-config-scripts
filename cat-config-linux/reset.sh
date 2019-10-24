@@ -87,35 +87,29 @@ function setup_foundation() {
     cp scripts/templates/foundation/foundation.peers.api.json resources/peers-api.json
 }
 
-while [[ 0 -ne $# ]]; do
-    case "${node_network}" in
-        ## Prepares a standalone, single local node with its own completely new network
-        --local)
-            shift
-            local boot_key=${network_private_key}
-            local public_key=${network_public_key}
-            
-            setup_local ${node_type} ${catapult_server_src} ${boot_key} ${public_key}
-        ;;
+case "${node_network}" in
+    ## Prepares a standalone, single local node with its own completely new network
+    --local)
+        local boot_key=${network_private_key}
+        local public_key=${network_public_key}
         
-        ## Prepares a node that is capable of connecting to the Foundation network
-        --foundation)
-            ## Copy nemesis seed
-            ## Copy resource files (provide root dir instead of catapult-server)
-            ## Ready to start with start.sh
-            setup_foundation
-        ;;
+        setup_local ${node_type} ${catapult_server_src} ${boot_key} ${public_key}
+    ;;
+    
+    ## Prepares a node that is capable of connecting to the Foundation network
+    --foundation)
+        ## Copy nemesis seed
+        ## Copy resource files (provide root dir instead of catapult-server)
+        ## Ready to start with start.sh
+        setup_foundation
+    ;;
+    
+    
+    ## Prepare a node that is ready to connect to an existing network
+    --existing)
+        local boot_key=${network_private_key}
+        local network_public_key=${network_public_key}
         
-        
-        ## Prepare a node that is ready to connect to an existing network
-        --existing)
-            shift
-            local boot_key=${network_private_key}
-            local network_public_key=${network_public_key}
-            
-            setup_existing ${node_type} ${template_name} ${catapult_server_src} ${boot_key} ${network_public_key}
-            
-        ;;
-    esac
-    shift
-done
+        setup_existing ${node_type} ${template_name} ${catapult_server_src} ${boot_key} ${network_public_key}
+    ;;
+esac
