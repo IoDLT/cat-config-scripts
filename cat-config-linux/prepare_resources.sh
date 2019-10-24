@@ -1,8 +1,9 @@
 #!/bin/zsh
 # require zsh for associative arrays
 
+local node_type=$1
 local catapult_server_src=$2
-local resources_src=$3
+local template_resource_src=$3
 local resources_dest=$4
 local boot_key=$5
 local public_key=$6
@@ -12,13 +13,13 @@ local local_path=$PWD
 function copy_peers() {
 	local filename="peers-$1.json"
 	echo "copying ${filename}"
-	cp "${resources_src}/resources/${filename}" "${resources_dest}/${filename}"
+	cp "${template_resource_src}/resources/${filename}" "${resources_dest}/${filename}"
 }
 
 function copy_properties() {
 	local filename="config-$1.properties"
 	echo "copying ${filename}"
-	cp "${resources_src}/resources/${filename}" "${resources_dest}/${filename}"
+	cp "${template_resource_src}/resources/${filename}" "${resources_dest}/${filename}"
 }
 
 function run_sed() {
