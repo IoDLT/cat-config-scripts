@@ -72,8 +72,8 @@ function setup_local() {
     local network_public_key=$4
     
     echo "Generating network generation hash (UUID)"
-    source ${script_src}/generate_hash.sh
-    local generation_hash=$(grep "private key:" ${script_src}/generation_hash.txt | sed -e 's/private key://g' | tr -d ' ')
+    source ${script_src}/generate_hash.sh ${catapult_server_src}
+    local generation_hash=$(grep "private key:" ${local_path}/generation_hash.txt | sed -e 's/private key://g' | tr -d ' ')
 
     echo "Preparing resources"
     source ${script_src}/prepare_resources.sh ${node_type} ${catapult_server_src} ${script_src}/templates/local ${local_path}/resources ${boot_key} ${network_public_key} ${generation_hash}
