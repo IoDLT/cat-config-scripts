@@ -5,7 +5,7 @@ local script_src=${local_path}/scripts/cat-config-linux
 local node_network=$1
 local node_type=$2
 local catapult_server_src=$3
-local network_public_key=$4
+local network_private_key=$4
 local network_public_key=$5
 local template_name=$6
 
@@ -110,7 +110,7 @@ while [[ 0 -ne $# ]]; do
         ## Prepare a node that is ready to connect to an existing network
         --existing)
             shift
-            local boot_key=${network_public_key}
+            local boot_key=${network_private_key}
             local network_public_key=${network_public_key}
             
             setup_existing ${node_type} ${template_name} ${catapult_server_src} ${boot_key} ${network_public_key}
