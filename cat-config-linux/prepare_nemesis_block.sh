@@ -20,8 +20,11 @@ config_form() {
 
 
 function generate_addresses() {
+    local network=$1
+    local no_of_keys=$2
+    local dest_path=$3
     echo "generating addresses"
-    ${catapult_server_src}/build/bin/catapult.tools.address -n "$1" -g "$2" > "$3"
+    ${catapult_server_src}/build/bin/catapult.tools.address -n "${network}" -g "${no_of_keys}" > "${dest_path}"
 }
 
 function run_sed() {
