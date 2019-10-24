@@ -59,6 +59,12 @@ As you can probably guess, our node configuration scripts will end up being insi
 
  Now, go ahead and move the `cat-config-<mac | linux>` found in this repo over to `catapult-node-data/scripts`
 
+ If you have a remote mongoDB host then you would also want to set the `REMOTE_MONGODB_HOST` environment variable.
+
+```
+export REMOTE_MONGODB_HOST=1.1.1.1:27018
+
+```
 
 ### Running `reset.sh`
 
@@ -81,7 +87,7 @@ Let's break this down:
 
 	- --foundation (in progress)
 
-	- --existing - ```zsh scripts/cat-config/reset.sh --existing <node_type> <template_name> <path_to_catapult-server_src> <private_key> <network_public_key>```.  Provided from a template, resources are loaded to join an existing network. You may add your own template by copying the structure in `templates/testnet`.
+	- --existing - ```zsh scripts/cat-config/reset.sh --existing <node_type> <path_to_catapult-server_src> <private_key> <network_public_key> <template_name>```.  Provided from a template, resources are loaded to join an existing network. You may add your own template by copying the structure in `templates/testnet`.
 
 Once you have your arguments in the correct order, you can simply run the script and watch it go!  If all went well, you should see the nemesis block information at the bottom of the output.  At any time if you want to change your node configuration, you may run `reset.sh` with different settings.  **Keep in mind that it will reset your chain!**
 
