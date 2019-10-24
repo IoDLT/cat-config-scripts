@@ -54,22 +54,22 @@ rm -rf ${local_path}/resources
 mkdir ${local_path}/resources
 
 function setup_existing() {
-    local node_type = $1
-    local template_name = $2
-    local catapult_server_src = $3
-    local boot_key = $4
-    local network_public_key = $5
-    local generation_hash=$(grep "private key:" ${script_src}/templates/${node_type}/generation_hash.txt | sed -e 's/private key://g' | tr -d ' ')
+    local node_type=$1
+    local template_name=$2
+    local catapult_server_src=$3
+    local boot_key=$4
+    local network_public_key=$5
+    local generation_hash=$(grep "private key:" ${script_src}/templates/${template_name}/generation_hash.txt | sed -e 's/private key://g' | tr -d ' ')
 
     source ${script_src}/prepare_resources.sh ${node_type} ${catapult_server_src} ${script_src}/templates/${template_name} ${local_path}/resources ${boot_key} ${network_public_key} ${generation_hash}
     cp -R ${script_src}/templates/${template_name}/seed/* ${local_path}/data
 }
 
 function setup_local() {
-    local node_type = $1
-    local catapult_server_src = $2
-    local boot_key = $3
-    local public_key = $4
+    local node_type=$1
+    local catapult_server_src=$2
+    local boot_key=$3
+    local public_key=$4
     
     echo "Generating network generation hash (UUID)"
     source ${script_src}/generate_hash.sh
