@@ -72,7 +72,7 @@ function prepare_base_resources() {
 	local -A user_pairs=(
 		"bootPrivateKey" "$boot_key"
 		"dataDirectory" "$local_path/data"
-        "pluginsDirectory" "$catapult_server_src/build/bin")
+        "pluginsDirectory" "$catapult_server_src/_build/bin")
 	run_sed "user" user_pairs
 }
 

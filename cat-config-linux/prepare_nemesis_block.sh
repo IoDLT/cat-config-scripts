@@ -24,7 +24,7 @@ function generate_addresses() {
     local no_of_keys=$2
     local dest_path=$3
     echo "generating addresses"
-    ${catapult_server_src}/build/bin/catapult.tools.address -n "${network}" -g "${no_of_keys}" > "${dest_path}"
+    ${catapult_server_src}/_build/bin/catapult.tools.address -n "${network}" -g "${no_of_keys}" > "${dest_path}"
 }
 
 function run_sed() {
@@ -101,7 +101,7 @@ function nemgen() {
         cd settings
         ######## need to run twice and patch the mosaic ids
         # first time to get cat.harvest and cat.currency
-        ${catapult_server_src}/build/bin/catapult.tools.nemgen  --resources $local_path --nemesisProperties "${local_path}${nemesis_path}" 2> /tmp/nemgen.log
+        ${catapult_server_src}/_build/bin/catapult.tools.nemgen  --resources $local_path --nemesisProperties "${local_path}${nemesis_path}" 2> /tmp/nemgen.log
         
         local harvesting_mosaic_id=$(grep "cat.harvest" /tmp/nemgen.log | grep nonce  | awk -F=  '{split($0, a, / /); print a[9]}' | sort -u)
         local currency_mosaic_id=$(grep "cat.currency" /tmp/nemgen.log | grep nonce  | awk -F=  '{split($0, a, / /); print a[9]}' | sort -u)
@@ -109,7 +109,7 @@ function nemgen() {
         # second time after replacing values for currencyMosaicId and harvestingMosaicId
         sed -i "s/^currencyMosaicId .*/currencyMosaicId = "$(config_form ${currency_mosaic_id})"/" ${local_path}/resources/config-network.properties
         sed -i "s/^harvestingMosaicId .*/harvestingMosaicId = "$(config_form ${harvesting_mosaic_id})"/" ${local_path}/resources/config-network.properties
-        ${catapult_server_src}/build/bin/catapult.tools.nemgen  --resources $local_path --nemesisProperties "${local_path}${nemesis_path}"
+        ${catapult_server_src}/_build/bin/catapult.tools.nemgen  --resources $local_path --nemesisProperties "${local_path}${nemesis_path}"
         
         cp -r ${local_path}/seed/* ${local_path}/data/
 

@@ -20,7 +20,7 @@ while [[ 0 -ne $# ]]; do
 	shift
 done
 
-local process=${catapult_src}/build/bin/catapult.${process_name}
+local process=${catapult_src}/_build/bin/catapult.${process_name}
 if [[ 0 -eq ${use_debugger} ]] then;
 	${process} .
 else
