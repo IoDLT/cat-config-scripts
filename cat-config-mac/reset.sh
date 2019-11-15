@@ -57,7 +57,7 @@ function setup_existing() {
 function setup_local() {
     
     echo "Generating network generation hash (UUID)"
-    source ${script_src}/generate_hash.sh
+    source ${script_src}/generate_hash.sh $2
     local generation_hash=$(grep "private key:" $PWD/generation_hash.txt | sed -e 's/private key://g' | tr -d ' ')
     
     echo "Preparing resources"
