@@ -31,7 +31,7 @@ This is the setup that is required to get a Catapult node up and running. Luckil
 ## How-To
 
 ### Directory Structure
-
+***
 In order for these to work, a certain directory structure has to be adopted. This structure is similar to the [catapult-service-bootstrap](https://github.com/tech-bureau/catapult-service-bootstrap):
 
 ```
@@ -50,11 +50,7 @@ Firstly, create a directory to house the above structure:
 
 ```
 mkdir catapult-node-data && cd catapult-node-data
-mkdir data
-mkdir nemesis
-mkdir resources
-mkdir scripts
-mkdir seed
+mkdir -p data nemesis resources scripts seed
 ```
 
 Now, go ahead and move the `cat-config/` found in this repo over to `catapult-node-data/scripts`
@@ -67,7 +63,7 @@ export REMOTE_MONGODB_HOST=1.1.1.1:27018
 ```
 
 ### Running `reset.sh`
-
+***
 `reset.sh` will reset any existing node configuration, as well as, configure a new node. Its usage is as follows, keep in mind the scripts utilize the `zsh` shell. Make sure you are in `catapult-node-data/` when you run this:
 
 `zsh scripts/cat-config/reset.sh --<node_option> <node_type> <path_to_catapult-server_src> <private_key> <public_key>`
@@ -90,18 +86,18 @@ Let's break this down:
 
 	This prepares node that is ready to connect to the Foundation, main testnet. 
 
-      	--existing - zsh scripts/cat-config/reset.sh --existing <node_type> <path_to_catapult-server_src> <private_key> <network_public_key> <template_name>```.  
+      	--existing - zsh scripts/cat-config/reset.sh --existing <node_type> <path_to_catapult-server_src> <private_key> <network_public_key> <template_name>.  
 		  
 	Provided from a template, resources are loaded to join an existing network. You may add your own template by copying the structure in `templates/testnet`.
 
 Once you have your arguments in the correct order, you can simply run the script and watch it go! If all went well, you should see the nemesis block information at the bottom of the output. At any time if you want to change your node configuration, you may run `reset.sh` with different settings. **Keep in mind that it will reset your chain!**
 
 ### Configure `config-harvesting.properties`
-
+***
 Before starting your node, take a private key from `harvester_addresses.txt` (it gets generated during `reset.sh`) and go into `resources/config-harvesting.properties`. Set the `harvestKey` to the private key you copied from `harvester_addresses.txt`.
 
 ### Starting Catapult with `start.sh`
-
+***
 To start a Catapult service (`server` or `broker`), run this script from `scripts/cat-config`:
 
 `zsh scripts/cat-config/start.sh <server | broker> <path_to_catapult-server_src> --force`
@@ -119,13 +115,13 @@ Let's break this down:
 ## Concepts
 
 ### Catapult Extensions
-
+***
 Extensions in Catapult are essentially modules that add features to the otherwise bare `catapult-server`. They range from extensions that are critical like consensus and networking to optional extensions like zmq messaging and other API conveniences.
 
 Extensions are _not_ meant to the confused with **plugins**. Extensions modify the core server, whereas plugins introduce new and different ways to alter the chain's state via transactions.
 
 ### Catapult Node Types
-
+***
 These scripts introduce several interesting concepts about Catapult nodes. If you noticed, we are actually able to generate configurations for _three_ types of nodes:
 
 - `peer` nodes are the "bare minimum" version of a Catapult node. It does not load API extensions like `extension.filespooling` or `extension.partialtransaction`, but rather it runs the backbone of the `catapult-server` architecture that handles consensus and networking. `peer` nodes require a few extensions in order to be operational.
