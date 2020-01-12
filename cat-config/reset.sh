@@ -1,5 +1,5 @@
 #!/bin/zsh
-local script_src=$PWD/scripts/cat-config-mac
+local script_src=$PWD/scripts/cat-config
 local catapult_server_src=$3
 
 if [[ -z "$1" ]] then;
