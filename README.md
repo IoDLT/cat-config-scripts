@@ -57,7 +57,7 @@ mkdir scripts
 mkdir seed
 ```
 
-Now, go ahead and move the `cat-config-<mac | linux>` found in this repo over to `catapult-node-data/scripts`
+Now, go ahead and move the `cat-config/` found in this repo over to `catapult-node-data/scripts`
 
 If you have a remote mongoDB host then you would also want to set the `REMOTE_MONGODB_HOST` environment variable.
 
@@ -82,11 +82,17 @@ Let's break this down:
 
 - `node_option` - This argument tells the script whether to configure the node as a completely new node, connect your node to an existing chain, or join the Foundation network. There are three switches respectively:
 
-      	- --local - ```zsh scripts/cat-config/reset.sh --local <node_type> <path_to_catapult-server_src> <private_key> <public_key>```. This starts a single, independent local node.  It has its own generation hash.
+      	--local - zsh scripts/cat-config/reset.sh --local <node_type> <path_to_catapult-server_src> <private_key> <public_key> 
+	
+	This starts a single, independent local node.  It has its own generation hash.
 
-      	- --foundation (in progress)
+      	--foundation <node_type> <path_to_catapult-server_src> <private_key> none
 
-      	- --existing - ```zsh scripts/cat-config/reset.sh --existing <node_type> <path_to_catapult-server_src> <private_key> <network_public_key> <template_name>```.  Provided from a template, resources are loaded to join an existing network. You may add your own template by copying the structure in `templates/testnet`.
+	This prepares node that is ready to connect to the Foundation, main testnet. 
+
+      	--existing - zsh scripts/cat-config/reset.sh --existing <node_type> <path_to_catapult-server_src> <private_key> <network_public_key> <template_name>```.  
+		  
+	Provided from a template, resources are loaded to join an existing network. You may add your own template by copying the structure in `templates/testnet`.
 
 Once you have your arguments in the correct order, you can simply run the script and watch it go! If all went well, you should see the nemesis block information at the bottom of the output. At any time if you want to change your node configuration, you may run `reset.sh` with different settings. **Keep in mind that it will reset your chain!**
 
