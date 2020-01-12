@@ -1,0 +1,38 @@
+{
+  "_info": "this file contains a list of peer_node peers",
+  "knownPeers": [
+    {
+      "publicKey": "2BFBD090137C869582AF28136A316517EBB1E5215CC7AC91750518FCD288E093",
+      "endpoint": {
+        "host": "root-20.us-west-1.nemtech.network",
+        "port": 7900
+      },
+      "metadata": {
+        "name": "root-20-us-west-1",
+        "roles": "Peer"
+      }
+    },
+    {
+      "publicKey": "8CA1671DD091E258E2216A1A8B9F8DF390A56B3B19987F17E4EFAD5A97DE0425",
+      "endpoint": {
+        "host": "root-20.us-east-1.nemtech.network",
+        "port": 7900
+      },
+      "metadata": {
+        "name": "root-20-us-east-1",
+        "roles": "Peer"
+      }
+    },
+    {
+      "publicKey": "FC67354A0F1E1EBBF700430BEBA03C608AA478E7175E15ACECC1F033C8BE6163",
+      "endpoint": {
+        "host": "root-20.eu-west-1.nemtech.network",
+        "port": 7900
+      },
+      "metadata": {
+        "name": "root-20-eu-west-1",
+        "roles": "Peer"
+      }
+    }
+  ]
+}
