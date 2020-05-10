@@ -1,5 +1,12 @@
 #!/bin/zsh
+local script_src=$PWD/scripts/cat-config
+
+echo ${script_src}
+cp -r ${script_src}/core/* certs/
+
 cd certs/
+
+
 mkdir new_certs && chmod 700 new_certs
 touch index.txt
 # create CA key

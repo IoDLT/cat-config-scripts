@@ -73,12 +73,12 @@ function setup_local() {
 }
 
 function setup_official() {
-    echo "Preparing offical testnet resources"
+    echo "Preparing official testnet resources"
     echo
     source ${script_src}/prepare_resources.sh $1 ${catapult_server_src} ${script_src}/templates/official $PWD/resources
     
-    cp -R ${script_src}/templates/foundation/seed/* $PWD/data
-    cp -R ${script_src}/templates/foundation/seed/* $PWD/seed
+    cp -R ${script_src}/templates/official/seed/* $PWD/data
+    cp -R ${script_src}/templates/official/seed/* $PWD/seed
     generate_cert
     echo "Finished."
     echo

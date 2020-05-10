@@ -2,7 +2,8 @@
 
 # generates the nemesis block properties file and nemesis block
 
-local catapult_server_src=$1
+local catapult_src=${CATAPULT_BIN}
+local catapult_server=${CATAPULT_SERVER_ROOT}
 local local_path=$PWD
 local nemesis_signer_key=$2
 local generation_hash=$3
@@ -28,7 +29,7 @@ config_form() {
 
 function generate_addresses() {
     echo "generating addresses"
-    ${catapult_server_src}/_build/bin/catapult.tools.address -n "$1" -g "$2" > "$3"
+    ${catapult_src}/catapult.tools.address -n "$1" -g "$2" > "$3"
 }
 
 function run_sed() {
@@ -45,7 +46,7 @@ function sed_keys() {
 
 
 function update_nemesis_block_file() {
-    cp "${catapult_server_src}/tools/nemgen/resources/mijin-test.properties" ${local_path}${nemesis_path}
+    cp "${catapult_server}/tools/nemgen/resources/mijin-test.properties" ${local_path}${nemesis_path}
     
     local -A nemesis_pairs=(
         "cppFile" ""
@@ -105,14 +106,14 @@ function nemgen() {
         cd settings
         ######## need to run twice and patch the mosaic ids
         # first time to get cat.harvest and cat.currency
-        ${catapult_server_src}/_build/bin/catapult.tools.nemgen  --resources $local_path --nemesisProperties "${local_path}${nemesis_path}" 2> /tmp/nemgen.log
+        ${catapult_src}/catapult.tools.nemgen  --resources $local_path --nemesisProperties "${local_path}${nemesis_path}" 2> /tmp/nemgen.log
         local harvesting_mosaic_id=$(grep "cat.harvest" /tmp/nemgen.log | grep nonce  | awk -F=  '{split($0, a, / /); print a[9]}' | sort -u)
         local currency_mosaic_id=$(grep "cat.currency" /tmp/nemgen.log | grep nonce  | awk -F=  '{split($0, a, / /); print a[9]}' | sort -u)
         
         # second time after replacing values for currencyMosaicId and harvestingMosaicId
         sed ${sed_flags[@]} "s/^harvestingMosaicId\ .*/harvestingMosaicId = $(config_form ${harvesting_mosaic_id})/" "$local_path/resources/config-network.properties"
         sed ${sed_flags[@]} "s/^currencyMosaicId\ .*/currencyMosaicId = $(config_form ${currency_mosaic_id})/" "$local_path/resources/config-network.properties"
-        ${catapult_server_src}/_build/bin/catapult.tools.nemgen  --resources $local_path --nemesisProperties "${local_path}${nemesis_path}"
+        ${catapult_src}/catapult.tools.nemgen  --resources $local_path --nemesisProperties "${local_path}${nemesis_path}"
         
         cp -r ${local_path}/seed/* ${local_path}/data/
         

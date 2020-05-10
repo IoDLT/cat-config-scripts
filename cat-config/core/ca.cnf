@@ -1,0 +1,24 @@
+[ca]
+default_ca = CA_default
+
+[CA_default]
+
+dir = .
+new_certs_dir = $dir/new_certs
+database = $dir/index.txt
+serial   = $dir/serial.dat
+
+private_key = $dir/ca.key.pem
+certificate = $dir/ca.cert.pem
+
+policy = policy_catapult
+
+[policy_catapult]
+commonName              = supplied
+
+[req]
+prompt = no
+distinguished_name = dn
+
+[dn]
+CN = some_name_here

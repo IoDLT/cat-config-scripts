@@ -2,6 +2,7 @@
 # require zsh for associative arrays
 local role=$1
 local catapult_server_src=$2
+local catapult_exec=${CATAPULT_BIN}
 local resources_src=$3
 local resources_dest=$4
 local local_path=$PWD
@@ -65,7 +66,7 @@ function prepare_base_resources() {
     local -A user_pairs=(
         "certificateDirectory" "$PWD/certs"
         "dataDirectory" "$local_path/data"
-    "pluginsDirectory" "$catapult_server_src/_build/bin")
+    "pluginsDirectory" "$catapult_exec")
     run_sed "user" user_pairs
 }
 
