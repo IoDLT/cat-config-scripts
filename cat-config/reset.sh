@@ -18,6 +18,11 @@ echo "Preparing fresh data directory"
 rm -rf $PWD/data
 mkdir $PWD/data
 
+if [ ! -f "/data/index.dat" ]; then
+    echo "No index.dat file, creating now...."
+    echo -ne "\01\0\0\0\0\0\0\0" > $PWD/data/index.dat
+fi
+
 echo "DONE CLEANING"
 
 # reset mongo
