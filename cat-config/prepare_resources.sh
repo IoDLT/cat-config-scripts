@@ -1,12 +1,9 @@
 #!/bin/zsh
 # require zsh for associative arrays
-
+local role=$1
 local catapult_server_src=$2
 local resources_src=$3
 local resources_dest=$4
-local boot_key=$5
-local public_key=$6
-local generation_hash=$7
 local local_path=$PWD
 
 local sed_flags=()
@@ -20,7 +17,7 @@ echo "SED FLAGS"
 echo ${sed_flags[@]}
 echo
 
-function copy_peers() {w
+function copy_peers() {
     local filename="peers-$1.json"
     echo "copying ${filename}"
     cp "${resources_src}/resources/${filename}" "${resources_dest}/${filename}"
@@ -58,11 +55,6 @@ function prepare_base_resources() {
         copy_properties ${extension}
     done
     
-    local -A logging_pairs=(
-        "level" "Debug"
-    "sinkType" "Async")
-    run_sed "logging-server" logging_pairs
-    
     local -A node_pairs=(
         "enableCacheDatabaseStorage" "true"
         "unconfirmedTransactionsCacheMaxSize" "10'000'000"
@@ -70,16 +62,8 @@ function prepare_base_resources() {
     "syncTimeout" "120s")
     run_sed "node" node_pairs
     
-    
-    local -A network_pairs=(
-        "generationHash" "$generation_hash"
-        "publicKey" "$public_key"
-    )
-    
-    run_sed "network" network_pairs
-    
     local -A user_pairs=(
-        "bootPrivateKey" "$boot_key"
+        "certificateDirectory" "$PWD/certs"
         "dataDirectory" "$local_path/data"
     "pluginsDirectory" "$catapult_server_src/_build/bin")
     run_sed "user" user_pairs
@@ -137,11 +121,11 @@ function prepare_dual_resources() {
     set_extensions extensions-server "true" p2p_extensions
 }
 
-echo "[PREPARING $1 NODE CONFIGURATION]"
+echo "[PREPARING ${role} NODE CONFIGURATION]"
 
 prepare_base_resources
 
-case "$1" in
+case "${role}" in
     "api")
         prepare_api_resources
     ;;

@@ -1,6 +1,6 @@
 #!/bin/zsh
 local script_src=$PWD/scripts/cat-config
-local catapult_server_src=$3
+local catapult_server_src=${CATAPULT_SERVER_ROOT}
 
 if [[ -z "$1" ]] then;
     echo "script must be called with one of the three options: --local | --existing | --foundation"
@@ -14,15 +14,11 @@ fi
 echo "Welcome to the Catapult Config Utility"
 
 # reapply data directory
-echo "+ preparing fresh data directory"
+echo "Preparing fresh data directory"
 rm -rf $PWD/data
 mkdir $PWD/data
 
-# clear state directories
-rm -rf state
-rm -rf statedb
-
-echo "<<< DONE"
+echo "DONE CLEANING"
 
 # reset mongo
 if [[ "peer" != "$1" ]] then;
@@ -36,51 +32,56 @@ if [[ "peer" != "$1" ]] then;
 fi
 
 # clear logs
-echo "+ clearing logs"
+echo "Clearing logs"
 touch catapult_server.reset.log # suppress glob errors by creating a file that always matches the glob
 rm -f *.log
 rm -rf logs
 
 # recreate resources
-echo "+ recreating resources"
+echo "Recreating resources"
 rm -rf $PWD/resources
 mkdir $PWD/resources
 
+# make dir structure
+mkdir -p data nemesis resources scripts seed certs
+
+function generate_cert() {
+    echo "Generating TLS Certificate"
+    echo
+    source ${script_src}/generate_certificate.sh
+}
+
 function setup_existing() {
-    local generation_hash=$(grep "private key:" $PWD/generation_hash.txt | sed -e 's/private key://g' | tr -d ' ')
-    
-    source ${script_src}/prepare_resources.sh $1 $3 ${script_src}/templates/$2 $PWD/resources $4 $5 ${generation_hash}
+    generate_cert
+    source ${script_src}/prepare_resources.sh $1 ${catapult_server_src} $3 ${script_src}/templates/$2 $PWD/resources
     cp -R ${script_src}/templates/$2/seed/* $PWD/data
 }
 
 function setup_local() {
-    
     echo "Generating network generation hash (UUID)"
     echo
     source ${script_src}/generate_hash.sh $2
     local generation_hash=$(grep "private key:" $PWD/generation_hash.txt | sed -e 's/private key://g' | tr -d ' ')
-    
+    generate_cert
     echo "Preparing resources"
     echo
-    source ${script_src}/prepare_resources.sh $1 $2 ${script_src}/templates/local $PWD/resources $3 $4 ${generation_hash}
+    source ${script_src}/prepare_resources.sh $1 ${catapult_server_src} ${script_src}/templates/local $PWD/resources $3 $4 ${generation_hash}
     
     echo "Generating new nemesis block"
     echo
-    source ${script_src}/prepare_nemesis_block.sh $2 $3 ${generation_hash}
+    source ${script_src}/prepare_nemesis_block.sh ${catapult_server_src} $3 ${generation_hash}
 }
 
-function setup_foundation() {
-    echo "Preparing foundation resources"
+function setup_official() {
+    echo "Preparing offical testnet resources"
     echo
-    # Generation hash from configuration
-    local generation_hash=CC42AAD7BD45E8C276741AB2524BC30F5529AF162AD12247EF9A98D6B54A385B
-    local network_public_key=A3CE86263CD000F45867A6B5A396A521AF4557D9A6BD3C796478A9BF40BF4F4C
-    source ${script_src}/prepare_resources.sh $1 $2 ${script_src}/templates/foundation $PWD/resources $3 ${network_public_key} ${generation_hash}
+    source ${script_src}/prepare_resources.sh $1 ${catapult_server_src} ${script_src}/templates/official $PWD/resources
     
     cp -R ${script_src}/templates/foundation/seed/* $PWD/data
     cp -R ${script_src}/templates/foundation/seed/* $PWD/seed
-    
+    generate_cert
     echo "Finished."
+    echo
 }
 
 while [[ 0 -ne $# ]]; do
@@ -89,35 +90,22 @@ while [[ 0 -ne $# ]]; do
         --local)
             shift
             local node_type=$1
-            local catapult_server_src=$2
-            local boot_key=$3
-            local public_key=$4
-            
-            setup_local ${node_type} ${catapult_server_src} ${boot_key} ${public_key}
+            setup_local ${node_type}
         ;;
         
-        ## Prepares a node that is capable of connecting to the Foundation network
-        --foundation)
+        ## Prepares a node that is capable of connecting to the offical network
+        --offical)
             shift
             local node_type=$1
-            local catapult_server_src=$2
-            local boot_key=$3
-            local public_key=$4
-            
-            setup_foundation ${node_type} ${catapult_server_src} ${boot_key} ${public_key}
+            setup_official ${node_type}
         ;;
-        
         
         ## Prepare a node that is ready to connect to an existing network
         --existing)
             shift
             local node_type=$1
             local template_name=$2
-            local catapult_server_src=$3
-            local boot_key=$4
-            local network_public_key=$5
-            
-            setup_existing ${node_type} ${template_name} ${catapult_server_src} ${boot_key} ${network_public_key}
+            setup_existing ${node_type} ${template_name}
         ;;
     esac
     shift

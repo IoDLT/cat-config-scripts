@@ -1,9 +1,6 @@
 #!/bin/zsh
-
-
-
 local process_name=$1
-local catapult_src=$2
+local catapult_src=${CATAPULT_SERVER_ROOT}
 local local_path=$PWD
 shift
 

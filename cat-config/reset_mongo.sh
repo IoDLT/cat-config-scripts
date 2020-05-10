@@ -1,5 +1,4 @@
 #!/bin/bash
-
 catapult_source=$1
 
 cd ${catapult_source}/scripts/mongo

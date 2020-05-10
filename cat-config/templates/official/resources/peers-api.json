@@ -1,0 +1,60 @@
+{
+  "_info": "this file contains a list of api_node peers",
+  "knownPeers": [
+    {
+      "publicKey": "08b0274c2793ce3570d1042b195731ae8a3a13044de2ea0a9833a31e98dfc5de",
+      "endpoint": {
+        "host": "api-01.ap-southeast-1.0941-v1.symboldev.network",
+        "port": 7900
+      },
+      "metadata": {
+        "name": "api-01-ap-southeast-1",
+        "roles": "Api"
+      }
+    },
+    {
+      "publicKey": "a08950e08860648692ffdbdcae6c1a5c368b11517a7ba1c6fbf20fac5d02001b",
+      "endpoint": {
+        "host": "api-01.eu-central-1.0941-v1.symboldev.network",
+        "port": 7900
+      },
+      "metadata": {
+        "name": "api-01-eu-central-1",
+        "roles": "Api"
+      }
+    },
+    {
+      "publicKey": "7a26944ac295fb043ca218dcc5ae21b0aa0b5d544e7fc97df60d80375073292b",
+      "endpoint": {
+        "host": "api-02.eu-central-1.0941-v1.symboldev.network",
+        "port": 7900
+      },
+      "metadata": {
+        "name": "api-02-eu-central-1",
+        "roles": "Api"
+      }
+    },
+    {
+      "publicKey": "2918557BA8BD8F3FF4CF4CFDE5E0EDFEEDDAC7404735E1725CDA675E32ACADEE",
+      "endpoint": {
+        "host": "api-01.ap-northeast-1.0941-v1.symboldev.network",
+        "port": 7900
+      },
+      "metadata": {
+        "name": "api-01-ap-northeast-1",
+        "roles": "Api"
+      }
+    },
+    {
+      "publicKey": "4d08a4d90d015f2e663f40eff1d9f36ac8473178da8d6297197293ab4bcdc83a",
+      "endpoint": {
+        "host": "api-02.ap-northeast-1.0941-v1.symboldev.network",
+        "port": 7900
+      },
+      "metadata": {
+        "name": "api-02-ap-northeast-1",
+        "roles": "Api"
+      }
+    }
+  ]
+}
