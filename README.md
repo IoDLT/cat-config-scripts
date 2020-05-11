@@ -91,12 +91,12 @@ Let's break this down:
 
       	--local - zsh scripts/cat-config/reset.sh --local <node_type>
 	
-	This starts a single, independent local node.  It has its own generation hash.
+	This prepares node that is ready to connect to the official, main testnet. 
 
       	--official <node_type> 
 
-	This prepares node that is ready to connect to the Foundation, main testnet. 
-
+   This prepares a node from an existing template.
+ 
       	--existing - zsh scripts/cat-config/reset.sh --existing <node_type> <template_name>.  
 		  
 	Provided from a template, resources are loaded to join an existing network. You may add your own template by copying the structure in `templates/testnet`.
