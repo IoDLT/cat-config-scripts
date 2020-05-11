@@ -19,16 +19,28 @@ These scripts were originally created by core developer Jaguar0625. I took them 
 - Reset your Catapult node.
 - Configure your node for `peer`, `api` or `dual` mode (more detail below).
 - Configure your node with the necessary extensions for each respective mode.
-- Configure `resources` with a user-given keypair and necessary catapult-server paths.
+- Configure `resources` necessary catapult-server paths.
 - Generate a nemesis block properties file with boot key and paths.
 - Generate mosaic ids for the given public key.
 - Generate a list of harvester keys and addresses, and configure the nemesis block file with them.
 - Generate a unique generation hash for each instance of the network.
 - Generate the nemesis block, 64 byte hashes.dat, and a fresh `data` directory.
+- Generate self-signed TLS certificates for the server
 
 This is the setup that is required to get a Catapult node up and running. Luckily, these scripts do it in just a few steps. :)
 
 ## How-To
+
+### Necessary Environment Variables
+
+Go to your `~/.bash_rc` (or `~/.bash_profile` on mac) and add these lines to the bottom:
+
+```
+export CATAPULT_SERVER_ROOT=<where your catapult server root is>
+export CATAPULT_BIN=<where your catapult build files are>
+```
+
+Then run `source ~/.bash_rc`.
 
 ### Directory Structure
 ***
@@ -41,16 +53,19 @@ catapult-node-data/
 ├── resources
 ├── scripts
 ├── seed
+├── certs
 └──   
 ```
 
 As you can probably guess, our node configuration scripts will end up being inside of the `scripts/` directory.
 
+Clone this repo: `git clone https://github.com/IoDLT/cat-config-scripts.git`
+
 Firstly, create a directory to house the above structure:
 
 ```
-mkdir catapult-node-data && cd catapult-node-data
-mkdir -p data nemesis resources scripts seed
+mkdir catapult-node && cd catapult-node
+mkdir -p data nemesis resources scripts seed certs
 ```
 
 Now, go ahead and move the `cat-config/` found in this repo over to `catapult-node-data/scripts`
@@ -66,27 +81,23 @@ export REMOTE_MONGODB_HOST=1.1.1.1:27018
 ***
 `reset.sh` will reset any existing node configuration, as well as, configure a new node. Its usage is as follows, keep in mind the scripts utilize the `zsh` shell. Make sure you are in `catapult-node-data/` when you run this:
 
-`zsh scripts/cat-config/reset.sh --<node_option> <node_type> <path_to_catapult-server_src> <private_key> <public_key>`
+`zsh scripts/cat-config/reset.sh --<node_option> <node_type>`
 
 Let's break this down:
 
 - `node_type` - This argument tells the script which kind of node to configure. There are three node types in catapult: `dual`, `peer`, and `api`. An explanation for each can be found in #concepts.
 
-- `path_to_catapult-server_src` - The FULL path to your catapult-server directory on your machine. catapult-server must be compiled and contain `_build/`.
-
-- `private_key`, `public_key`, or `network_public_key` - Your node's keypair, and in the case of node that is connecting to an existing network, the network's public key. You can generate a keypair using a tool like the [nem2-cli](https://github.com/nemtech/nem2-cli).
-
 - `node_option` - This argument tells the script whether to configure the node as a completely new node, connect your node to an existing chain, or join the Foundation network. There are three switches respectively:
 
-      	--local - zsh scripts/cat-config/reset.sh --local <node_type> <path_to_catapult-server_src> <private_key> <public_key> 
+      	--local - zsh scripts/cat-config/reset.sh --local <node_type>
 	
 	This starts a single, independent local node.  It has its own generation hash.
 
-      	--foundation <node_type> <path_to_catapult-server_src> <private_key> none
+      	--official <node_type> 
 
 	This prepares node that is ready to connect to the Foundation, main testnet. 
 
-      	--existing - zsh scripts/cat-config/reset.sh --existing <node_type> <path_to_catapult-server_src> <private_key> <network_public_key> <template_name>.  
+      	--existing - zsh scripts/cat-config/reset.sh --existing <node_type> <template_name>.  
 		  
 	Provided from a template, resources are loaded to join an existing network. You may add your own template by copying the structure in `templates/testnet`.
 
@@ -100,7 +111,7 @@ Before starting your node, take a private key from `harvester_addresses.txt` (it
 ***
 To start a Catapult service (`server` or `broker`), run this script from `scripts/cat-config`:
 
-`zsh scripts/cat-config/start.sh <server | broker> <path_to_catapult-server_src> --force`
+`zsh scripts/cat-config/start.sh <server | broker> --force`
 
 Let's break this down:
 
