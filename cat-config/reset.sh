@@ -3,7 +3,7 @@ local script_src=$PWD/scripts/cat-config
 local catapult_server_src=${CATAPULT_SERVER_ROOT}
 
 if [[ -z "$1" ]] then;
-    echo "script must be called with one of the three options: --local | --existing | --foundation"
+    echo "script must be called with one of the three options: --local | --existing | --official"
     return 0
     
     elif [[ -z "$2" ]] then;

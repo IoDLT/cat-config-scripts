@@ -3,4 +3,4 @@ prompt = no
 distinguished_name = dn
 
 [dn]
-CN = some_name_here
+CN = node_name
